@@ -1,0 +1,37 @@
+AUTONOMA EXPERIMENTAL FRAMEWORK
+
+[TEST BUILD - 1 ]
+
+You should not have this unless you are a trusted developer.
+If you are found to be in possession of this, your main account will be terminated.
+
+===============================
+
+= = = = - - - - = = = =
+TESTING LOG:
+= = = = - - - - = = = =
+
+- Weapons 2.0 + Perks integration
+
+- Armor 2.0 + Modules
+
+- Class Diversity + Abilities
+
+- Account Creation (Data storage on a server)
+
+- Removal of ModTypes and vanilla-binding features.
+
+= = = = - - - - = = = =
+NEXT IN DEVELOPMENT:
+= = = = - - - - = = = =
+
+- Custom World Loading + Independence from Subworld Library
+
+- "Tangential" World Loading (i.e. locations WITHIN locations w/o directly triggering world loading)
+
+- World Map Expansion and Breaking
+
+= = = = - - - - = = = = 
+WORKING DESCRIPTION
+= = = = - - - - = = = =
+
