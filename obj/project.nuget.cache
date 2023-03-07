@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "vsOEHrqYuVf3OY1zmiZDfCWe+08N+6dZXc4nERRJ32+zUTy7mtbbapTX6pnPCTjyCdTntpdh5Qq9xmTA9XV37A==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\dligh\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\AEF\\AEF.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\dligh\\.nuget\\packages\\tmodloader.codeassist\\0.1.5\\tmodloader.codeassist.0.1.5.nupkg.sha512"
+  ],
+  "logs": []
+}

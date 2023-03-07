@@ -1,0 +1,3 @@
+displayName = Project: Hawking
+author = Event Horizon Games
+version = 0.1
