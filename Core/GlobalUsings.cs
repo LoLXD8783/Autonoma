@@ -1,6 +1,8 @@
 ﻿global using AEF;
 global using AEF.Core.Definitions;
+global using AEF.Core.Definitions.ItemTypes;
 global using AEF.Core.Definitions.ItemTypes.Archetypes;
+global using AEF.Core.Dictionaries;
 
 global using Microsoft.Xna.Framework;
 global using Microsoft.Xna.Framework.Graphics;

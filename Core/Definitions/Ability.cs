@@ -1,32 +1,65 @@
 ﻿namespace AEF.Core.Definitions
 {
-    public abstract class Ability : ModType
+    public class Ability : ModType, TagSerializable, ILoadable
     {
-        public ModTranslation myName;
-        public ModTranslation Description;
-        public int ID;
+        public AbilityType Type { get; set; }
+
+        public ChargeState State { get; set; }
+
+        public string myName;
+
+        public string Description;
 
         public int energyCost;
 
         public int energyOverTime;
+
+        public TagCompound SerializeData()
+        {
+            return new TagCompound
+            {
+                ["name"] = myName,
+            };
+        }
+
+        private static Func<TagCompound, Ability> DESERIALIZER => 
+            static (TagCompound tag) =>
+            {
+                return new Ability()
+                {
+                    myName = tag.GetString("name")
+                };
+            };
+
+        public static Ability DeserializeData(TagCompound tag)
+        {
+            return DESERIALIZER.Invoke(tag);
+        }
 
         public virtual void SetDefaults()
         {
 
         }
 
-        protected sealed override void Register()
-        {
-            ModTypeLookup<Ability>.Register(this);
-            myName = LocalizationLoader.GetOrCreateTranslation(Mod, "AbilityName." + myName);
-            Description = LocalizationLoader.GetOrCreateTranslation(Mod, "AbilityDesc." + Description);
-        }
-
         public sealed override void SetupContent()
         {
             SetDefaults();
-
             base.SetupContent();
+        }
+
+        protected sealed override void Register()
+        {
+            ModTypeLookup<Ability>.Register(this);
+        }
+
+        public override void Load()
+        {
+            base.Load();
+        }
+
+        public override void Unload()
+        {
+            base.Unload();
         }
 
         public enum AbilityType
@@ -42,48 +75,29 @@
             MEDIUM,
             HIGH
         }
+
     }
 
     public class AbilityLoader : ILoadable
     {
-        private static List<Ability> abilityList;
+        private static List<Ability> AbilityList;
 
-        internal static List<Ability> list 
+        void ILoadable.Load(Mod mod)
         {
-            get
+            AbilityList = new List<Ability>();
+
+            foreach (Type t in mod.Code.GetTypes())
             {
-                if (abilityList == null)
+                if (t.IsSubclassOf(typeof(Ability)))
                 {
-                    abilityList = new List<Ability>();
+                    AbilityList.Add((Ability)Activator.CreateInstance(t));
                 }
-                return abilityList;
             }
         }
 
-        public static int Register(Ability obj)
+        void ILoadable.Unload()
         {
-            int type = list.Count;
-            list.Add(obj);
-            return type;
-        }
-
-        public static Ability Get(int id)
-        {
-            if (id < 0 || id >= list.Count)
-            {
-                return default;
-            }
-            return abilityList[id];
-        }
-
-        public void Load(Mod mod)
-        {
-
-        }
-
-        public void Unload()
-        {
-            list.Clear();
+            AbilityList.Clear();
         }
     }
 }

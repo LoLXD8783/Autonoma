@@ -1,19 +1,36 @@
 ﻿namespace AEF.Core.Definitions
 {
-    public abstract class Trait : ModType
+    public class Trait : ModType, TagSerializable, ILoadable
     {
-        public ModTranslation myName;
-        public ModTranslation Description;
-        public int ID;
+        public string myName;
 
-        public virtual string iconTexture => "";
+        public string Description;
 
-        public Trait trait => this;
+        public TagCompound SerializeData()
+        {
+            return new TagCompound()
+            {
+                ["name"] = myName
+            };
+        }
+
+        private static Func<TagCompound, Trait> DESERIALIZER => 
+            static (TagCompound tag) => 
+            {
+                return new Trait()
+                {
+                    myName = tag.Get<string>("name")
+                };
+            };
+
+        public static Trait DeserializeData(TagCompound tag)
+        {
+            return DESERIALIZER.Invoke(tag);
+        }
 
         public virtual void SetDefaults()
         {
-            myName.SetDefault("");
-            Description.SetDefault("");
+
         }
 
         public virtual void ConditionalEffect(KnightWeapon k, MageWeapon m, RangerWeapon r)
@@ -26,63 +43,53 @@
 
         }
 
+        public override string ToString()
+        {
+            return myName.ToString().ToLower().Trim('\'').Replace(' ', '_');
+        }
+
         protected sealed override void Register()
         {
             ModTypeLookup<Trait>.Register(this);
-            myName = LocalizationLoader.GetOrCreateTranslation(Mod, "TraitName." + myName);
-            Description = LocalizationLoader.GetOrCreateTranslation(Mod, "TraitDescription." + Description);
-
-
         }
 
         public sealed override void SetupContent()
         {
             SetDefaults();
-
             base.SetupContent();
+        }
+
+        public override void Load()
+        {
+
+        }
+
+        public override void Unload()
+        {
+
         }
     }
 
     public class TraitLoader : ILoadable
     {
-        private static List<Trait> traitList;
+        private static List<Trait> TraitList;
 
-        internal static List<Trait> List
+        void ILoadable.Load(Mod mod)
         {
-            get
+            TraitList = new List<Trait>();
+
+            foreach (Type t in mod.Code.GetTypes())
             {
-                if (traitList == null)
+                if (t.IsSubclassOf(typeof(Trait)))
                 {
-                    traitList = new List<Trait>();
+                    TraitList.Add((Trait)Activator.CreateInstance(t));
                 }
-                return traitList;
             }
         }
 
-        public static int Register(Trait obj)
+        void ILoadable.Unload()
         {
-            int type = List.Count;
-            List.Add(obj);
-            return type;
-        }
-
-        public static Trait Get(int id)
-        {
-            if (id < 0 || id >= List.Count)
-            {
-                return default;
-            }
-            return List[id];
-        }
-
-        public void Load(Mod mod)
-        {
-
-        }
-
-        public void Unload()
-        {
-            List.Clear();
+            TraitList.Clear();
         }
     }
 }

@@ -2,25 +2,17 @@
 {
     public abstract class Weapon : AEFItem
     {
-        /*"Why switch from array to nested list?"
-         * In general, lists are far easier to use and are more malleable when it comes to multi-trait selectability.
-         * 
-         * Alternative ideas -=-
-         * Make traits into "Mods" and have them be equippables. (this involves UI. fml)
-         */
-
         #region VARS
 
         public Archetype archetype { get; set; }
 
-        public int statImpact;
+        public int stat_Impact;
 
-        /// <summary>
-        /// A nested list to contain every trait this weapon has. <para></para>
-        /// First list contains a set of lists <para></para>
-        /// Each list contains 1-3 perks, first, second, third, fourth and origin, respectively.
-        /// </summary>
-        public List<List<Trait>> traitSet;
+        public List<Trait> FirstSlot;
+        public List<Trait> SecondSlot;
+        public List<Trait> ThirdSlot;
+        public List<Trait> FourthSlot;
+        public List<Trait> OriginSlot;
 
         private static List<Trait> TraitPool;
 
@@ -31,14 +23,35 @@
         public override ModItem Clone(Item newEntity)
         {
             Weapon clone = (Weapon)base.Clone(newEntity);
-            clone.traitSet = new List<List<Trait>>(traitSet.Count);
-            for (int i = 0; i < clone.traitSet.Count; i++)
+
+            clone.FirstSlot = new List<Trait>(FirstSlot.Count);
+            for (int i = 0; i < FirstSlot.Count; i++)
             {
-                clone.traitSet.Add(new List<Trait>(traitSet[i].Count));
-                for (int j = 0; j < clone.traitSet[i].Count; j++)
-                {
-                    clone.traitSet[i][j] = traitSet[i][j];
-                }
+                clone.FirstSlot[i] = FirstSlot[i];
+            }
+
+            clone.SecondSlot = new List<Trait>(SecondSlot.Count);
+            for (int i = 0; i < SecondSlot.Count; i++)
+            {
+                clone.SecondSlot[i] = SecondSlot[i];
+            }
+
+            clone.ThirdSlot = new List<Trait>(ThirdSlot.Count);
+            for (int i = 0; i < FirstSlot.Count; i++)
+            {
+                clone.ThirdSlot[i] = ThirdSlot[i];
+            }
+
+            clone.FourthSlot = new List<Trait>(FourthSlot.Count);
+            for (int i = 0; i < FourthSlot.Count; i++)
+            {
+                clone.FourthSlot[i] = FourthSlot[i];
+            }
+
+            clone.OriginSlot = new List<Trait>(OriginSlot.Count);
+            for (int i = 0; i < FirstSlot.Count; i++)
+            {
+                clone.OriginSlot[i] = OriginSlot[i];
             }
 
             return clone;
@@ -46,30 +59,6 @@
 
         public override void Load()
         {
-            traitSet = new()
-            {
-                new List<Trait>
-                {
-
-                },
-                new List<Trait>
-                {
-
-                },
-                new List<Trait>
-                {
-
-                },
-                new List<Trait>
-                {
-
-                },
-                new List<Trait>
-                {
-
-                }
-            };
-
             SetTraitPool(TraitPool, archetype);
 
             base.Load();
@@ -77,7 +66,8 @@
 
         public override void SetDefaults()
         {
-            statImpact = 0;
+            type = ItemType.Weapon;
+            stat_Impact = 0;
             base.SetDefaults();
         }
 
@@ -90,7 +80,7 @@
 
         public virtual void ResetStats(Weapon w)
         {
-            w.statImpact = statImpact;
+            w.stat_Impact = stat_Impact;
         }
         public virtual void ResetStats(KnightWeapon k)
         {
