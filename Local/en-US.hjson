@@ -1,0 +1,22 @@
+﻿Mods:
+	AEF: {
+		GameTips:{
+			EGH_Tip:
+			'''
+			EVENT HORIZON GAMES
+
+			This mod was created by Event Horizon Games.
+
+			Check out all of our projects on Twitter! @Event_Horizon_Official
+			'''
+
+			AEF_Weapons:
+			'''
+			WEAPONS
+
+			Autonoma hosts a ton of different weapons, as well as ways to customize them.
+
+			You [i forgot the rest of this line :)]
+			'''
+		}
+	}
