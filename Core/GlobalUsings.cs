@@ -1,8 +1,12 @@
 ﻿global using AEF;
+
+global using AEF.Content.Traits.origin;
+
 global using AEF.Core.Definitions;
 global using AEF.Core.Definitions.ItemTypes;
 global using AEF.Core.Definitions.ItemTypes.Archetypes;
 global using AEF.Core.Dictionaries;
+global using AEF.Core.Players;
 
 global using Microsoft.Xna.Framework;
 global using Microsoft.Xna.Framework.Graphics;

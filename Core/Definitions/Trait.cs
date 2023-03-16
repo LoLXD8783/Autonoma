@@ -1,31 +1,33 @@
 ﻿namespace AEF.Core.Definitions
 {
-    public class Trait : ModType, TagSerializable, ILoadable
+    public abstract class Trait : ILoadable
     {
-        public string myName;
+        public string TraitName;
 
-        public string Description;
+        public string TraitDescription;
 
-        public TagCompound SerializeData()
+        public int ID;
+
+        /// <summary>
+        /// Returns the ID of this trait.
+        /// </summary>
+        /// <typeparam name="T">The Trait you're grabbing the ID for</typeparam>
+        /// <returns></returns>
+        public static int GetID<T>() where T : Trait
         {
-            return new TagCompound()
-            {
-                ["name"] = myName
-            };
+            int myKey = TraitLoader.TraitList.IndexOf(ModContent.GetInstance<T>());
+            return myKey;
         }
 
-        private static Func<TagCompound, Trait> DESERIALIZER => 
-            static (TagCompound tag) => 
-            {
-                return new Trait()
-                {
-                    myName = tag.Get<string>("name")
-                };
-            };
-
-        public static Trait DeserializeData(TagCompound tag)
+        /// <summary>
+        /// Registers this trait to the database. <para></para>
+        /// Must be called in <see cref="Trait.SetDefaults"/>
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        protected static void Register<T>() where T : Trait
         {
-            return DESERIALIZER.Invoke(tag);
+            TraitLoader.TraitList.Add(ModContent.GetInstance<T>());
+            //WriteToDebug "Trait [ID] registered successfully."
         }
 
         public virtual void SetDefaults()
@@ -33,63 +35,74 @@
 
         }
 
-        public virtual void ConditionalEffect(KnightWeapon k, MageWeapon m, RangerWeapon r)
-        {
-
-        }
-
-        public virtual void StatEffect(KnightWeapon k, MageWeapon m, RangerWeapon r)
-        {
-
-        }
-
-        public override string ToString()
-        {
-            return myName.ToString().ToLower().Trim('\'').Replace(' ', '_');
-        }
-
-        protected sealed override void Register()
-        {
-            ModTypeLookup<Trait>.Register(this);
-        }
-
-        public sealed override void SetupContent()
+        void ILoadable.Load(Mod mod)
         {
             SetDefaults();
-            base.SetupContent();
         }
 
-        public override void Load()
+        void ILoadable.Unload()
         {
 
         }
-
-        public override void Unload()
+        
+        /// <summary>
+        /// Makes things happen when this trait is on a weapon. <para></para>
+        /// Handles static trait increases and conditional effects (such as kill counts) <para></para>
+        /// See <see cref="Weapon.UpdateInventory(Player)"/> for more information of how this method is called. <para></para>
+        /// See <see cref="Random.TraitEffect(Weapon)"/> for an example of how this method is used.
+        /// </summary>
+        /// <param name="weapon"></param>
+        public virtual void TraitEffect(Weapon weapon)
         {
 
         }
     }
 
-    public class TraitLoader : ILoadable
+    public class TraitLoader : ModSystem
     {
-        private static List<Trait> TraitList;
+        public static List<Trait> TraitList;
 
-        void ILoadable.Load(Mod mod)
+        public override void Load()
         {
             TraitList = new List<Trait>();
-
-            foreach (Type t in mod.Code.GetTypes())
-            {
-                if (t.IsSubclassOf(typeof(Trait)))
-                {
-                    TraitList.Add((Trait)Activator.CreateInstance(t));
-                }
-            }
         }
 
-        void ILoadable.Unload()
+        public override void Unload()
         {
             TraitList.Clear();
+        }
+    }
+
+    public class Random : Trait
+    {
+        public override void SetDefaults()
+        {
+            TraitName = "RANDOM";
+
+            TraitDescription = "Description";
+
+            Register<Random>();
+            base.SetDefaults();
+        }
+
+        public override void TraitEffect(Weapon weapon)
+        {
+            //weapon.statImpact += 5;
+
+            //while (tempTimer > 0 && thisBuff (some bool)) {
+            //  weapon.statImpact += 10;
+            //  tempTimer--;
+            //}
+
+            //Due to how this method is called in updateInventory, we can use it like an updater.
+
+            //Applies to:
+            // - timers
+            // - kill counts
+            // - random tick-based checks
+            // - variable resetting
+
+            base.TraitEffect(weapon);
         }
     }
 }

@@ -109,8 +109,11 @@
             Armor,
             Core,
             Emblem,
+            Enhancement,
             Fragment,
+            Material,
             Miscellaneous,
+            Ship,
             Weapon
         }
     }

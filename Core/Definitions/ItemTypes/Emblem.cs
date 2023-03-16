@@ -1,6 +1,7 @@
 ﻿namespace AEF.Core.Definitions.ItemTypes
 {
-    internal class Emblem
+    public abstract class Emblem : AEFItem
     {
+
     }
 }

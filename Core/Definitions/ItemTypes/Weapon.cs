@@ -4,9 +4,53 @@
     {
         #region VARS
 
+        //NOTE: I am aware of possibly bad programming practices by consolidating all of the weapon's stats here instead of segmenting them off.
+        //HOWEVER: I do not care, and this makes it miles easier to directly update and handle stats, as well as Kitbash weapons (which hold a combo of both)
+        //ALONGSIDE THIS: 
+
         public Archetype archetype { get; set; }
 
         public int stat_Impact;
+
+        /*KNIGHT STATS*/
+
+        public float statBreakChance;
+
+        public float statAttackSpeed;
+
+        public float statAttackRange;
+
+        public float statComboDamage;
+
+        public int statHeavyDamage;
+
+        public int statCombo;
+
+        /*RANGER STATS*/
+
+        public float statCritChance;
+
+        public float statCritDamage;
+
+        public int statRange;
+
+        public int statStability;
+
+        public int statReload;
+
+        public int magCur;
+
+        public int magMax;
+
+        /*MAGE STATS*/
+
+        public float statCastSpeed;
+
+        public float statCastRange;
+
+        public float statStatusChance;
+
+        public int statStatusDuration;
 
         public List<Trait> FirstSlot;
         public List<Trait> SecondSlot;
@@ -71,26 +115,71 @@
             base.SetDefaults();
         }
 
+        public override void OnCreate(ItemCreationContext context)
+        {
+            //ON ITEM CREATION:
+            // - Roll Traits in each Slot, pull from TraitPool
+            // - Set each of TraitSet_Sel's traits to the first in each slot as default.
+
+            traitSet_Sel[0] = FirstSlot[0];
+            traitSet_Sel[1] = SecondSlot[0];
+            traitSet_Sel[2] = ThirdSlot[0];
+            traitSet_Sel[3] = FourthSlot[0];
+            traitSet_Sel[4] = OriginSlot[0];
+            base.OnCreate(context);
+        }
+
         public override void UpdateInventory(Player player)
         {
             ResetStats(this);
 
+            foreach (Trait t in traitSet_Sel) //we only want to update the selected traits from each list.
+            {
+                t.StatEffect(this);
+                t.ConditionalEffect(this);
+            }
+
             base.UpdateInventory(player);
         }
 
-        public virtual void ResetStats(Weapon w)
+        /// <summary>
+        /// Resets the stats of this weapon. <para></para>
+        /// Resets to previously set DEFAULTS, not 0.
+        /// </summary>
+        /// <param name="weapon"></param>
+        public virtual void ResetStats(Weapon weapon)
         {
-            w.stat_Impact = stat_Impact;
+            weapon.stat_Impact = stat_Impact;
+
+            weapon.statAttackRange = statAttackRange;
+            weapon.statAttackSpeed = statAttackSpeed;
+            weapon.statBreakChance = statBreakChance;
+            weapon.statCombo = statCombo;
+            weapon.statComboDamage = statComboDamage;
+            weapon.statHeavyDamage = statHeavyDamage;
+
+            weapon.statCritChance = statCritChance;
+            weapon.statCritDamage = statCritDamage;
+            weapon.statRange = statRange;
+            weapon.statReload = statReload;
+            weapon.statStability = statStability;
+            weapon.magMax = magMax;
+
+            weapon.statCastRange = statCastRange;
+            weapon.statCastSpeed = statCastSpeed;
+            weapon.statStatusChance = statStatusChance;
+            weapon.statStatusDuration = statStatusDuration;
+
         }
-        public virtual void ResetStats(KnightWeapon k)
+        public virtual void ResetStats(KnightWeapon knight)
         {
 
         }
-        public virtual void ResetStats(MageWeapon m)
+        public virtual void ResetStats(MageWeapon magic)
         {
 
         }
-        public virtual void ResetStats(RangerWeapon r)
+        public virtual void ResetStats(RangerWeapon range)
         {
 
         }

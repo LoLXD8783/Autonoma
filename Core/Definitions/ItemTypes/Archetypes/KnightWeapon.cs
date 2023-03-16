@@ -4,19 +4,7 @@
     {
         #region VARS
 
-        public KnightArchetype knightArch { get; set; }
-
-        public float statBreakChance;
-
-        public float statAttackSpeed;
-
-        public float statAttackRange;
-
-        public float statComboDamage;
-
-        public int statHeavyDamage;
-
-        public int statCombo;
+        public KnightArchetype KnightArch { get; set; }
 
         #endregion
 
@@ -32,27 +20,14 @@
             base.SetDefaults();
         }
 
-        public override void UpdateInventory(Player player)
+        public override void ResetStats(KnightWeapon knight)
         {
-            ResetStats(this);
-
-            foreach (Trait t in traitSet_Sel)
-            {
-                t.StatEffect(this, null, null);
-                t.ConditionalEffect(this, null, null);
-            }
-
-            base.UpdateInventory(player);
-        }
-
-        public override void ResetStats(KnightWeapon k)
-        {
-            k.statAttackRange = statAttackRange;
-            k.statAttackSpeed = statAttackSpeed;
-            k.statBreakChance = statBreakChance;
-            k.statComboDamage = statComboDamage;
-            k.statHeavyDamage = statHeavyDamage;
-            base.ResetStats(k);
+            knight.statAttackRange = statAttackRange;
+            knight.statAttackSpeed = statAttackSpeed;
+            knight.statBreakChance = statBreakChance;
+            knight.statComboDamage = statComboDamage;
+            knight.statHeavyDamage = statHeavyDamage;
+            base.ResetStats(knight);
         }
 
         public enum KnightArchetype 

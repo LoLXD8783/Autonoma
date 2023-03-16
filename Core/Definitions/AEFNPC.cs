@@ -4,6 +4,8 @@
     {
         public NPCRace NpcRace { get; set; }
 
+        public bool isBroken;
+
         public int ShieldsCur;
 
         public int ShieldsMax;
