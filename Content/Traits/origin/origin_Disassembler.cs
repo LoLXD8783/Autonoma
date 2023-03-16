@@ -4,15 +4,18 @@
     {
         public override void SetDefaults()
         {
-            myName = "Machina Disassembler";
+            TraitName = "Machina Disassembler";
 
-            Description = 
+            TraitDescription = 
                 "MACHINA OFFENSIVE ORIGIN TRAIT \n" +
                 "Increases this weapon's damage against Machina enemies. \n\n" +
                 "Also increases: \n" +
                 "- Knight = Increased Break Chance \n" +
                 "- Mage = Increased Status Chance and Duration \n" +
                 "- Ranger = Increased Crit Chance and Damage";
+
+            Register<origin_Disassembler>();
+
             base.SetDefaults();
         }
 
