@@ -16,20 +16,39 @@
     <PackageReference Include="tModLoader.CodeAssist" Version="0.1.*" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Assets\" />
+    <Folder Include="Assets\Fonts\" />
+    <Folder Include="Assets\Textures\Item\" />
+    <Folder Include="Assets\Textures\Buff\" />
     <Folder Include="Content\Item\weapon\knight\" />
     <Folder Include="Content\Item\weapon\mage\" />
     <Folder Include="Content\Item\weapon\ranger\" />
-    <Folder Include="Content\Trait\firstSlot\barrel\" />
-    <Folder Include="Content\Trait\firstSlot\lens\" />
-    <Folder Include="Content\Trait\origin\" />
-    <Folder Include="Content\Trait\secondSlot\magazine\" />
-    <Folder Include="Content\Trait\secondSlot\capacitor\" />
-    <Folder Include="Content\Trait\special\knight\" />
-    <Folder Include="Content\Trait\special\mage\" />
-    <Folder Include="Content\Trait\special\ranger\" />
-    <Folder Include="Core\Dictionaries\" />
-    <Folder Include="Core\UI\" />
-    <Folder Include="Core\Systems\" />
+    <Folder Include="Content\Traits\firstSlot\barrel\" />
+    <Folder Include="Content\Traits\firstSlot\lens\" />
+    <Folder Include="Content\Traits\firstSlot\blade\" />
+    <Folder Include="Content\Traits\firstSlot\hammerhead\" />
+    <Folder Include="Content\Traits\firstSlot\emitter\" />
+    <Folder Include="Content\Traits\firstSlot\string\" />
+    <Folder Include="Content\Traits\fourthSlot\core\" />
+    <Folder Include="Content\Traits\fourthSlot\ornament\" />
+    <Folder Include="Content\Traits\secondSlot\magazine\" />
+    <Folder Include="Content\Traits\secondSlot\capacitor\" />
+    <Folder Include="Content\Traits\secondSlot\grip\" />
+    <Folder Include="Content\Traits\secondSlot\battery\" />
+    <Folder Include="Content\Traits\secondSlot\handle\" />
+    <Folder Include="Content\Traits\secondSlot\quiver\" />
+    <Folder Include="Content\Traits\special\knight\" />
+    <Folder Include="Content\Traits\special\mage\" />
+    <Folder Include="Content\Traits\special\ranger\" />
+    <Folder Include="Content\Traits\thirdSlot\guard\" />
+    <Folder Include="Content\Traits\thirdSlot\amplifier\" />
+    <Folder Include="Content\Traits\thirdSlot\sight\" />
+    <Folder Include="Content\Traits\thirdSlot\trigger\" />
+    <Folder Include="Content\Traits\thirdSlot\transformer\" />
+    <Folder Include="Content\Traits\thirdSlot\shield\" />
+    <Folder Include="Content\Traits\thirdSlot\pommel\" />
+    <Folder Include="Core\Definitions\NPCRaces\" />
+    <Folder Include="Core\Menu\" />
+    <Folder Include="Core\Handlers\" />
+    <Folder Include="Core\UI\Elements\" />
   </ItemGroup>
 </Project>

@@ -2,8 +2,16 @@ namespace AEF
 {
 	public class AEF : Mod
 	{
+        public static AEF Instance { get; set; }
+
+        public AEF() 
+        {
+            Instance = this;
+        }
+
         public override void Load()
         {
+            SetScreenTitle();
             base.Load();
         }
 
@@ -13,7 +21,7 @@ namespace AEF
             base.PostSetupContent();
         }
 
-        public void SetScreenTitle()
+        public static void SetScreenTitle()
         {
             string[] titles =
             {
@@ -67,6 +75,5 @@ namespace AEF
             "CheatSheet",
             "AEF"
         };
-
     }
 }
